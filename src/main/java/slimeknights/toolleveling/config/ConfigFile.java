@@ -1,28 +1,23 @@
 package slimeknights.toolleveling.config;
 
 import com.google.common.collect.Sets;
-
 import net.minecraft.item.Item;
+import slimeknights.mantle.config.AbstractConfigFile;
+import slimeknights.mantle.configurate.objectmapping.Setting;
+import slimeknights.mantle.configurate.objectmapping.serialize.ConfigSerializable;
+import slimeknights.tconstruct.library.TinkerRegistry;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import slimeknights.mantle.config.AbstractConfigFile;
-import slimeknights.mantle.configurate.objectmapping.Setting;
-import slimeknights.mantle.configurate.objectmapping.serialize.ConfigSerializable;
-import slimeknights.tconstruct.library.TinkerRegistry;
-
-import static slimeknights.tconstruct.tools.harvest.TinkerHarvestTools.excavator;
-import static slimeknights.tconstruct.tools.harvest.TinkerHarvestTools.hammer;
-import static slimeknights.tconstruct.tools.harvest.TinkerHarvestTools.lumberAxe;
-import static slimeknights.tconstruct.tools.harvest.TinkerHarvestTools.scythe;
+import static slimeknights.tconstruct.tools.harvest.TinkerHarvestTools.*;
 
 @ConfigSerializable
 public class ConfigFile extends AbstractConfigFile {
 
-  private final static int CONFIG_VERSION = 1;
+  private final static int CONFIG_VERSION = 2;
 
   @Setting
   General general = new General();
@@ -85,7 +80,30 @@ public class ConfigFile extends AbstractConfigFile {
     @Setting(comment = "Base XP for each of the listed tools")
     public Map<Item, Integer> baseXpForTool = new HashMap<>();
 
-    @Setting(comment = "How much the XP cost will multiply per level, minimum 2.")
+    @Setting(comment = "How much the XP cost will multiply per level. Minimum 1 (STB Edition change)")
     public float levelMultiplier = 2f;
+
+    @Setting(comment = "How much XP each action will add to the tool. Useful for giving XP only when doing " +
+            "specific actions (e.g.: mining ores gives XP, while stone does not) or to give fractional XP (stone = 2, ores = 3) (STB Edition feature)")
+    public int baseToolXP = 1;
+
+    @Setting(comment = "How much XP each mined block gives. Format is: <modid:registry_name@metadata>=<xp>. For example: \"minecraft:coal_ore@0\"=2 (STB Edition feature)")
+    public Map<String, Integer> miningToolsXPOverride = new HashMap<String, Integer>() {{
+      put("minecraft:coal_ore@0", 2);
+      put("minecraft:iron_ore@0", 2);
+      put("minecraft:gold_ore@0", 3);
+      put("minecraft:lapis_ore@0", 3);
+      put("minecraft:redstone_ore@0", 3);
+      put("minecraft:diamond_ore@0", 4);
+      put("minecraft:emerald_ore@0", 4);
+      put("minecraft:quartz_ore@0", 3);
+    }};
+
+    @Setting(comment = "Set this to false to disable the miningToolsXPOverrides. Useful if you want to temporarily disable the feature (STB Edition feature)")
+    public boolean enableMiningToolsXPOverride = true;
+
+    @Setting(comment = "If true, blocks not in miningToolsXPOverride config will give as much XP as the difference " +
+            "between the tool mining level and the block mining level. Formula is Abs(ToolMiningLevel - BlockMiningLevel + 1) (STB Edition feature)")
+    public boolean miningLevelXP = false;
   }
 }

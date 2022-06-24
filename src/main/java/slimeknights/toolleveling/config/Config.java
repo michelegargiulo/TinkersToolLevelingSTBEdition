@@ -1,10 +1,10 @@
 package slimeknights.toolleveling.config;
 
 import net.minecraft.item.Item;
+import slimeknights.mantle.config.AbstractConfig;
 
 import java.io.File;
-
-import slimeknights.mantle.config.AbstractConfig;
+import java.util.Map;
 
 public class Config extends AbstractConfig {
 
@@ -16,11 +16,6 @@ public class Config extends AbstractConfig {
     ConfigFile.init();
 
     configFile = this.load(new ConfigFile(file), ConfigFile.class);
-    
-	if (configFile.toolxp.levelMultiplier < 2) {
-	  configFile.toolxp.levelMultiplier = 2f;
-	  configFile.setNeedsSaving();
-	}
   }
 
   public static int getBaseXpForTool(Item item) {
@@ -39,4 +34,22 @@ public class Config extends AbstractConfig {
   public static boolean canLevelUp(int currentLevel) {
     return INSTANCE.configFile.general.maximumLevels < 0 || INSTANCE.configFile.general.maximumLevels >= currentLevel;
   }
+
+  public static int getBaseToolXP() {
+    return INSTANCE.configFile.toolxp.baseToolXP;
+  }
+
+  public static boolean isXPMiningLevelBased() {
+    return INSTANCE.configFile.toolxp.miningLevelXP;
+  }
+
+  public static Map<String, Integer> getMiningXPOverrides() {
+    return INSTANCE.configFile.toolxp.miningToolsXPOverride;
+  }
+
+  public static boolean isMiningXPOverridesEnabled() {
+    return INSTANCE.configFile.toolxp.enableMiningToolsXPOverride;
+  }
+
+
 }

@@ -11,7 +11,6 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import slimeknights.tconstruct.common.Sounds;
 
 @Mod.EventBusSubscriber(modid = TinkerToolLeveling.MODID)

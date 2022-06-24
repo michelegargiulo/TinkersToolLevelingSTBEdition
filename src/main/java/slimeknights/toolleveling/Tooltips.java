@@ -4,13 +4,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
-
-import java.awt.*;
-import java.util.List;
-
 import slimeknights.tconstruct.library.client.CustomFontColor;
 import slimeknights.tconstruct.library.utils.TinkerUtil;
 import slimeknights.toolleveling.config.Config;
+
+import java.awt.*;
+import java.util.List;
 
 // utility class for constructing tooltip
 public final class Tooltips {
@@ -20,7 +19,7 @@ public final class Tooltips {
 
   public static void addTooltips(ItemStack itemStack, List<String> tooltips) {
     NBTTagCompound tag = TinkerUtil.getModifierTag(itemStack, TinkerToolLeveling.modToolLeveling.getModifierIdentifier());
-    if(!tag.hasNoTags()) {
+    if(!tag.isEmpty()) {
       ToolLevelNBT data = new ToolLevelNBT(tag);
       if(Config.canLevelUp(data.level)) {
         tooltips.add(1, getXpToolTip(data.xp, TinkerToolLeveling.modToolLeveling.getXpForLevelup(data.level, itemStack)));

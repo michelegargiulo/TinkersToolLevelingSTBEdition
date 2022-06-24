@@ -1,17 +1,16 @@
-[{
-    "modid": "tinkertoolleveling",
-    "name": "Tinkers Tool Leveling",
-    "description": "A small mod that gives your tools XP and awards extra modifiers on levelup",
-    "version": "${version}",
-    "mcversion": "${MCversion}",
-    "url": "https://github.com/SlimeKnights/TinkersToolLeveling",
-    "updateUrl": "",
-    "authorList": [
-      "boni"
-    ],
-    "credits": "",
-    "logoFile": "",
-    "screenshots": [],
-    "parent":"",
-    "dependencies": []
-}]
+[
+{
+  "modid": "tinkerstoolleveling",
+  "name": "Tinkers Tool Leveling - STB Edition",
+  "description": "Original Tinkers Tool Leveling mod, by SlimeKnights, boni, modified to expand on features and configuration by Smokey The Bandicoot.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/michelegargiulo/TinkersToolLevelingSTBEdition",
+  "updateUrl": "",
+  "authorList": ["SmokeyTheBandicoot"],
+  "credits": "SlimeKnights, boni, for Tinkers' Construct, Mantle and Tinkers Tool Leveling, ",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

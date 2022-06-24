@@ -15,27 +15,20 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import javax.annotation.Nullable;
-
 import slimeknights.tconstruct.library.entity.EntityProjectileBase;
 import slimeknights.tconstruct.library.events.TinkerToolEvent;
 import slimeknights.tconstruct.library.modifiers.ModifierAspect;
-import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 import slimeknights.tconstruct.library.modifiers.ProjectileModifierTrait;
 import slimeknights.tconstruct.library.modifiers.TinkerGuiException;
 import slimeknights.tconstruct.library.tinkering.TinkersItem;
 import slimeknights.tconstruct.library.tools.ProjectileLauncherNBT;
 import slimeknights.tconstruct.library.tools.ranged.BowCore;
-import slimeknights.tconstruct.library.traits.IProjectileTrait;
-import slimeknights.tconstruct.library.utils.TagUtil;
-import slimeknights.tconstruct.library.utils.Tags;
-import slimeknights.tconstruct.library.utils.TinkerUtil;
-import slimeknights.tconstruct.library.utils.ToolBuilder;
-import slimeknights.tconstruct.library.utils.ToolHelper;
+import slimeknights.tconstruct.library.utils.*;
 import slimeknights.tconstruct.tools.melee.TinkerMeleeWeapons;
 import slimeknights.toolleveling.capability.CapabilityDamageXp;
 import slimeknights.toolleveling.config.Config;
+
+import java.util.logging.Logger;
 
 public class ModToolLeveling extends ProjectileModifierTrait {
 
@@ -76,7 +69,25 @@ public class ModToolLeveling extends ProjectileModifierTrait {
   @Override
   public void afterBlockBreak(ItemStack tool, World world, IBlockState state, BlockPos pos, EntityLivingBase player, boolean wasEffective) {
     if(wasEffective && player instanceof EntityPlayer) {
-      addXp(tool, 1, (EntityPlayer) player);
+
+      // Get the block registry name to check for overrides
+      String registryName = state.getBlock().getRegistryName().toString();
+      String metadata = String.valueOf(state.getBlock().getMetaFromState(state));
+      TinkerToolLeveling.logger.info("Regname: " + registryName + "; Metadata: " + metadata);
+
+      // If the block IS in the overrides:
+      if (Config.isMiningXPOverridesEnabled() && Config.getMiningXPOverrides().containsKey(registryName + "@" + metadata)) {
+        addXp(tool, Config.getMiningXPOverrides().get(registryName + "@" + metadata), (EntityPlayer) player);
+
+      // Else, if configured, give as much XP as the difference in mining level.
+      } else if (Config.isXPMiningLevelBased()) {
+        addXp(tool, ToolHelper.getHarvestLevelStat(tool) - state.getBlock().getHarvestLevel(state) + 1, (EntityPlayer) player);
+
+      //Else, just add base XP
+      } else {
+        addXp(tool, Config.getBaseToolXP(), (EntityPlayer) player);
+
+      }
     }
   }
 

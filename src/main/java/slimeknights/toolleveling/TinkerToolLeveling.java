@@ -10,15 +10,16 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.io.File;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import slimeknights.mantle.network.NetworkWrapper;
 import slimeknights.toolleveling.capability.CapabilityDamageXp;
 import slimeknights.toolleveling.config.Config;
 import slimeknights.toolleveling.config.ConfigSync;
 import slimeknights.toolleveling.config.ConfigSyncPacket;
 import slimeknights.toolleveling.debug.CommandLevelTool;
+
+import java.io.File;
 
 @Mod(modid = TinkerToolLeveling.MODID,
     version = TinkerToolLeveling.VERSION,
@@ -32,6 +33,8 @@ public class TinkerToolLeveling {
 
   public static final String MODID = "tinkertoolleveling";
   public static final String VERSION = "${version}";
+
+  public static final Logger logger = LogManager.getLogger(MODID);
 
   @SidedProxy(clientSide = "slimeknights.toolleveling.CommonProxy", serverSide = "slimeknights.toolleveling.CommonProxy")
   public static CommonProxy proxy;
