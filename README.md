@@ -26,4 +26,4 @@ As of 1.2.0 (first forked version) there are the following additional features/c
 
 ## Future Development
 
-I don't plan to change much else from the mod. I was thinking about message configurability (custom level up messages and level names), but that should already be doable by using a mod like Resource Loader or similar. I was also thinking about awarding more XP to non-mining tools in some situations, but generally those tools already receive multiple XP points at a time. Small suggestions are welcome
+I don't plan to change much else from the mod. I was thinking about message configurability (custom level up messages and level names), but that should already be doable by using a mod like Resource Loader or similar or with a resource pack. I was also thinking about awarding more XP to non-mining tools in some situations, but generally those tools already receive multiple XP points at a time. Small suggestions are welcome
