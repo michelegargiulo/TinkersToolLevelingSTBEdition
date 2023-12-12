@@ -32,7 +32,7 @@ public class Config extends AbstractConfig {
   }
 
   public static boolean canLevelUp(int currentLevel) {
-    return INSTANCE.configFile.general.maximumLevels < 0 || INSTANCE.configFile.general.maximumLevels >= currentLevel;
+    return INSTANCE.configFile.general.maximumLevels <= 0 || INSTANCE.configFile.general.maximumLevels >= currentLevel;
   }
 
   public static int getBaseToolXP() {
