@@ -73,15 +73,17 @@ public class ModToolLeveling extends ProjectileModifierTrait {
       // Get the block registry name to check for overrides
       String registryName = state.getBlock().getRegistryName().toString();
       String metadata = String.valueOf(state.getBlock().getMetaFromState(state));
-      TinkerToolLeveling.logger.info("Regname: " + registryName + "; Metadata: " + metadata);
+      // TinkerToolLeveling.logger.info("Regname: " + registryName + "; Metadata: " + metadata);
 
       // If the block IS in the overrides:
+      int xpForHarvestLevel = ToolHelper.getHarvestLevelStat(tool) - state.getBlock().getHarvestLevel(state) + 1;
       if (Config.isMiningXPOverridesEnabled() && Config.getMiningXPOverrides().containsKey(registryName + "@" + metadata)) {
-        addXp(tool, Config.getMiningXPOverrides().get(registryName + "@" + metadata), (EntityPlayer) player);
+          // Awards the configured amount of XP for the mined block. If miningOverrides and alwaysAwardMiningLevel are enabled then also award the HL difference in XP
+          addXp(tool, Config.getMiningXPOverrides().get(registryName + "@" + metadata) + (Config.isXPMiningLevelBased() && Config.isHarvestLevelXPActiveForOverrides() ? xpForHarvestLevel : 0), (EntityPlayer) player);
 
       // Else, if configured, give as much XP as the difference in mining level.
       } else if (Config.isXPMiningLevelBased()) {
-        addXp(tool, ToolHelper.getHarvestLevelStat(tool) - state.getBlock().getHarvestLevel(state) + 1, (EntityPlayer) player);
+        addXp(tool, xpForHarvestLevel, (EntityPlayer) player);
 
       //Else, just add base XP
       } else {
@@ -100,6 +102,9 @@ public class ModToolLeveling extends ProjectileModifierTrait {
         addXp(tool, Math.round(damageDealt), entityPlayer);
       }
       else if(target.hasCapability(CapabilityDamageXp.CAPABILITY, null)) {
+        if (!Config.isXPAwardedOnEntityDeathOnly()) {
+          addXp(tool, Math.round(damageDealt), entityPlayer);
+        }
         target.getCapability(CapabilityDamageXp.CAPABILITY, null).addDamageFromTool(damageDealt, tool, entityPlayer);
       }
     }

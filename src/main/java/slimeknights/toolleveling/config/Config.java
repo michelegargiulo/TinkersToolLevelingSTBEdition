@@ -43,6 +43,8 @@ public class Config extends AbstractConfig {
     return INSTANCE.configFile.toolxp.miningLevelXP;
   }
 
+  public static boolean isHarvestLevelXPActiveForOverrides() { return INSTANCE.configFile.toolxp.hlXPForOverrides; }
+
   public static Map<String, Integer> getMiningXPOverrides() {
     return INSTANCE.configFile.toolxp.miningToolsXPOverride;
   }
@@ -51,5 +53,5 @@ public class Config extends AbstractConfig {
     return INSTANCE.configFile.toolxp.enableMiningToolsXPOverride;
   }
 
-
+  public static boolean isXPAwardedOnEntityDeathOnly() { return INSTANCE.configFile.toolxp.awardXPKillOnly; }
 }

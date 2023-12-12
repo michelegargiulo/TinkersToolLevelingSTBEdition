@@ -102,8 +102,16 @@ public class ConfigFile extends AbstractConfigFile {
     @Setting(comment = "Set this to false to disable the miningToolsXPOverrides. Useful if you want to temporarily disable the feature (STB Edition feature)")
     public boolean enableMiningToolsXPOverride = true;
 
+    @Setting(comment = "Set this to true to award XP based on the mining level also for the blocks that have an XP override. Enabling this will give" +
+            "the overridden amount of XP + more XP based on the difference in mining level. For example: Iron Ore configured to award 4XP, harvest level 2. Mining with Manyullyn " +
+            "pickaxe, mining level 5. If enableMiningToolsXPOverride and this settings are enabled, when mining iron ore the amount of XP will be: 4XP + (5 - 2 + 1) (STB Edition feature)")
+    public boolean hlXPForOverrides = false;
+
     @Setting(comment = "If true, blocks not in miningToolsXPOverride config will give as much XP as the difference " +
             "between the tool mining level and the block mining level. Formula is Abs(ToolMiningLevel - BlockMiningLevel + 1) (STB Edition feature)")
     public boolean miningLevelXP = false;
+
+    @Setting(comment = "Set this to false to award weapons XP based on the damage dealt, not only when the entity is killed. (STB Edition change)")
+    public boolean awardXPKillOnly = true;
   }
 }
